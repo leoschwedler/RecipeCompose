@@ -7,15 +7,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.recipecompose.data.remote.api.SpoonacularService
-import com.example.recipecompose.presentation.ui.DetailScreen
-import com.example.recipecompose.presentation.ui.HomeScreen
-import com.example.recipecompose.presentation.ui.SearchScreen
-import com.example.recipecompose.presentation.ui.WelcomeScreen
+import com.example.recipecompose.search.data.api.SearchService
+import com.example.recipecompose.detail.presentation.ui.DetailScreen
+import com.example.recipecompose.home.presentation.ui.HomeScreen
+import com.example.recipecompose.search.presentation.ui.SearchScreen
+import com.example.recipecompose.welcome.presentation.WelcomeScreen
 
 @Composable
 fun NavHostApp(
-    service: SpoonacularService,
+    service: SearchService,
     modifier: Modifier = Modifier
 ) {
 
@@ -26,7 +26,7 @@ fun NavHostApp(
             WelcomeScreen(navHostController = navController)
         }
         composable(route = "HomeScreen") {
-            HomeScreen(modifier = modifier, service = service, navHostController = navController)
+            HomeScreen(modifier = modifier,navHostController = navController)
         }
         composable(
             route = "DetailScreen" + "/{id}",
@@ -39,7 +39,6 @@ fun NavHostApp(
             DetailScreen(
                 modifier = modifier,
                 id = id.toInt(),
-                service = service,
                 navHostController = navController
             )
         }
@@ -53,8 +52,7 @@ fun NavHostApp(
             SearchScreen(
                 query = query,
                 modifier = modifier,
-                navHostController = navController,
-                service = service
+                navHostController = navController
             )
         }
     }

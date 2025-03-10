@@ -1,8 +1,10 @@
 package com.example.recipecompose.di
 
 import android.util.Log
-import com.example.recipecompose.data.remote.api.SpoonacularService
-import com.example.recipecompose.util.Constants
+import com.example.recipecompose.commom.Constants
+import com.example.recipecompose.search.data.api.SearchService
+import com.example.recipecompose.detail.data.api.DetailService
+import com.example.recipecompose.home.data.remote.api.HomeService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,7 +58,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideService(retrofit: Retrofit): SpoonacularService {
-        return retrofit.create(SpoonacularService::class.java)
+    fun provideServiceSearch(retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideServiceHome(retrofit: Retrofit): HomeService {
+        return retrofit.create(HomeService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideServiceDetail(retrofit: Retrofit): DetailService {
+        return retrofit.create(DetailService::class.java)
     }
 }

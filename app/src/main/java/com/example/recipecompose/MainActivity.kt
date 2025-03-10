@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.recipecompose.data.remote.api.SpoonacularService
-import com.example.recipecompose.presentation.theme.RecipeComposeTheme
+import com.example.recipecompose.search.data.api.SearchService
+import com.example.recipecompose.commom.theme.RecipeComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var service: SpoonacularService
+    lateinit var service: SearchService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
