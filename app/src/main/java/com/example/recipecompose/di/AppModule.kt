@@ -1,10 +1,16 @@
 package com.example.recipecompose.di
 
 import android.util.Log
-import com.example.recipecompose.commom.Constants
+import com.example.recipecompose.commom.util.Constants
 import com.example.recipecompose.search.data.api.SearchService
 import com.example.recipecompose.detail.data.api.DetailService
+import com.example.recipecompose.detail.data.repository.DetailRepository
+import com.example.recipecompose.detail.data.repository.DetailRepositoryImpl
 import com.example.recipecompose.home.data.remote.api.HomeService
+import com.example.recipecompose.home.data.remote.repository.HomeRepository
+import com.example.recipecompose.home.data.remote.repository.HomeRepositoryImpl
+import com.example.recipecompose.search.data.repository.SearchRepository
+import com.example.recipecompose.search.data.repository.SearchRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -72,5 +78,23 @@ object AppModule {
     @Singleton
     fun provideServiceDetail(retrofit: Retrofit): DetailService {
         return retrofit.create(DetailService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHomeRepository(service: HomeService): HomeRepository{
+        return HomeRepositoryImpl(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchRepository(service: SearchService): SearchRepository{
+        return SearchRepositoryImpl(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailRepository(service: DetailService): DetailRepository{
+        return DetailRepositoryImpl(service)
     }
 }

@@ -24,6 +24,8 @@ import androidx.navigation.NavHostController
 import com.example.recipecompose.commom.components.CustomCard
 import com.example.recipecompose.commom.components.CustomSearch
 import com.example.recipecompose.home.data.remote.dto.RecipesDTO
+import com.example.recipecompose.home.presentation.model.HomeUiData
+import com.example.recipecompose.home.presentation.model.HomeUiState
 import com.example.recipecompose.home.presentation.viewmodel.HomeViewmodel
 
 @Composable
@@ -35,12 +37,11 @@ fun HomeScreen(
     val uiState by viewmodel.uiState.collectAsState()
 
     HomeContent(
-        listrecipesDTO = uiState.listRecipeRandom,
+        homeUiState = uiState,
         onClick = {
             navHostController.navigate(route = "DetailScreen/${it.id}")
         },
         modifier = modifier,
-        query = uiState.query,
         changeQuery = viewmodel::onChangeQuery,
         toggleSearchQuery = {
             navHostController.navigate("SearchScreen/${uiState.query}")
@@ -51,11 +52,10 @@ fun HomeScreen(
 
 @Composable
 private fun HomeContent(
-    listrecipesDTO: List<RecipesDTO>,
-    query: String,
+    homeUiState: HomeUiState,
     changeQuery: (String) -> Unit,
     toggleSearchQuery: (String) -> Unit,
-    onClick: (RecipesDTO) -> Unit,
+    onClick: (HomeUiData) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(color = Color.Black) {
@@ -72,7 +72,7 @@ private fun HomeContent(
             )
             CustomSearch(
                 modifier = Modifier.padding(top = 15.dp),
-                query = query,
+                query = homeUiState.query,
                 changeQuery = changeQuery,
                 toggleSearchQuery = toggleSearchQuery
             )
@@ -85,8 +85,8 @@ private fun HomeContent(
                 color = Color.White
             )
             LazyColumn {
-                items(listrecipesDTO) {
-                    CustomCard(recipesDTO = it, onClick = onClick)
+                items(homeUiState.listRecipeRandom) {
+                    CustomCard(homeUiData = it, onClick = onClick)
                 }
             }
 

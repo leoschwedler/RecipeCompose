@@ -15,11 +15,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.recipecompose.search.data.dto.SearchQueryDTO
+import com.example.recipecompose.search.presentation.model.SearchUiData
 
 @Composable
 fun CustomCardSearch(
-    searchQueryDto: SearchQueryDTO,
-    onClick: (SearchQueryDTO) -> Unit,
+    searchQueryDto: SearchUiData,
+    onClick: (SearchUiData) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(

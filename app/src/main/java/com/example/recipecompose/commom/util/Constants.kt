@@ -1,4 +1,4 @@
-package com.example.recipecompose.commom
+package com.example.recipecompose.commom.util
 
 object Constants {
     const val BASE_URL = "https://api.spoonacular.com/"

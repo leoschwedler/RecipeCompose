@@ -16,15 +16,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.recipecompose.home.data.remote.dto.RecipesDTO
+import com.example.recipecompose.home.presentation.model.HomeUiData
 
 @Composable
 fun CustomCard(
-    recipesDTO: RecipesDTO,
-    onClick: (RecipesDTO) -> Unit,
+    homeUiData: HomeUiData,
+    onClick: (HomeUiData) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        onClick = {onClick(recipesDTO)},
+        onClick = {onClick(homeUiData)},
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
@@ -35,14 +36,14 @@ fun CustomCard(
     ) {
         Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
             AsyncImage(
-                model = recipesDTO.image,
+                model = homeUiData.image,
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
                 modifier = Modifier
                     .height(150.dp)
                     .fillMaxWidth()
             )
-            Text(recipesDTO.title, color = Color.Black)
+            Text(homeUiData.title, color = Color.Black)
             Text("Overview", color = Color.Gray)
         }
     }

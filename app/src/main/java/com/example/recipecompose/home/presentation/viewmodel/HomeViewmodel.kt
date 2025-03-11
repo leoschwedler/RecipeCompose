@@ -1,10 +1,11 @@
 package com.example.recipecompose.home.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.recipecompose.home.data.remote.api.HomeService
-import com.example.recipecompose.home.presentation.model.UiStateHome
+import com.example.recipecompose.commom.model.Result
+import com.example.recipecompose.home.data.remote.dto.toHomeUiData
+import com.example.recipecompose.home.data.remote.repository.HomeRepository
+import com.example.recipecompose.home.presentation.model.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,41 +14,39 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewmodel @Inject constructor(val service: HomeService) : ViewModel() {
+class HomeViewmodel @Inject constructor(val repository: HomeRepository) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(UiStateHome())
+    private val _uiState = MutableStateFlow(HomeUiState())
     val uiState = _uiState.asStateFlow()
 
 
     init {
-        fetchRecipeRandom()
+        loadRecipeRandom()
     }
 
     fun onChangeQuery(query: String) {
         _uiState.update { it.copy(query = query) }
     }
 
-    fun fetchRecipeRandom() {
+    fun loadRecipeRandom() {
         viewModelScope.launch {
-            try {
-                _uiState.update { it.copy(isLoading = true) }
-                val response = service.getRecipeRandom()
-                if (response.isSuccessful) {
-                    response.body()?.recipes?.let { result ->
-                        _uiState.update {
-                            it.copy(
-                                listRecipeRandom = result
-                            )
-                        }
+            _uiState.update { it.copy(isLoading = true) }
+            val result = repository.fetchRecipeRandom()
+            when (result) {
+                is Result.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            isError = true,
+                            errorMessage = result.errorMessage
+                        )
                     }
-                } else {
-                    Log.e(
-                        "HomeScreen",
-                        "Error code: ${response.code()} - Error Body: ${response.errorBody()}"
-                    )
                 }
-            } catch (e: Exception) {
-                Log.e("HomeScreen", "Exception $e")
+
+                is Result.Success -> {
+                    val homeUiData = result.data.map { it.toHomeUiData() }
+                    _uiState.update { it.copy(isLoading = false, listRecipeRandom = homeUiData) }
+                }
             }
         }
     }

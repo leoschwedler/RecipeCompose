@@ -28,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.recipecompose.detail.data.dto.RecipedesDetailDto
+import com.example.recipecompose.detail.presentation.model.DetailUiData
 import com.example.recipecompose.detail.presentation.viewmodel.DetailViewModel
 
 
@@ -39,12 +40,12 @@ fun DetailScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    viewModel.fetchRecipeDetail(id)
+    viewModel.loadRecipeDetail(id)
 
 
 
     uiState.detailDto?.let {
-        DetailContent(recipesDTO = it, onBackPressed = {
+        DetailContent(detailUiData = it, onBackPressed = {
             navHostController.popBackStack()
         }, modifier = modifier)
     }
@@ -52,7 +53,7 @@ fun DetailScreen(
 
 @Composable
 private fun DetailContent(
-    recipesDTO: RecipedesDetailDto,
+    detailUiData: DetailUiData,
     onBackPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -65,7 +66,7 @@ private fun DetailContent(
                 }
                 Spacer(Modifier.width(5.dp))
                 Text(
-                    text = recipesDTO.title,
+                    text = detailUiData.title,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -73,14 +74,14 @@ private fun DetailContent(
                 )
             }
             AsyncImage(
-                model = recipesDTO.image,
+                model = detailUiData.image,
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
                 modifier = Modifier
                     .height(300.dp)
                     .fillMaxWidth()
             )
-            Text(text = recipesDTO.summary, fontSize = 12.sp, color = Color.White, maxLines = 5)
+            Text(text = detailUiData.summary, fontSize = 12.sp, color = Color.White, maxLines = 5)
         }
     }
 }

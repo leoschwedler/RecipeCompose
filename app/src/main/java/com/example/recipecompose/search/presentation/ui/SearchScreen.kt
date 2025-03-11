@@ -1,6 +1,5 @@
 package com.example.recipecompose.search.presentation.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,12 +15,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,9 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.recipecompose.search.data.api.SearchService
-import com.example.recipecompose.search.data.dto.SearchQueryDTO
 import com.example.recipecompose.commom.components.CustomCardSearch
+import com.example.recipecompose.search.presentation.model.SearchUiData
+import com.example.recipecompose.search.presentation.model.SearchUiState
 import com.example.recipecompose.search.presentation.viewmodel.SearchViewModel
 
 @Composable
@@ -44,7 +39,7 @@ fun SearchScreen(
     modifier: Modifier = Modifier,
 ) {
     val uiState by viewModel._uiState.collectAsState()
-    viewModel.fetchSearch(query)
+    viewModel.loadSearch(query = query)
 
     SearchContent(
         query = query,
@@ -54,7 +49,7 @@ fun SearchScreen(
         onClick = {
             navHostController.navigate(route = "")
         },
-        listSearchQueryDTO = uiState.listSearch,
+        searchUiState = uiState,
         modifier = modifier
     )
 }
@@ -63,8 +58,8 @@ fun SearchScreen(
 private fun SearchContent(
     query: String,
     onBackPressed: () -> Unit,
-    onClick: (SearchQueryDTO) -> Unit,
-    listSearchQueryDTO: List<SearchQueryDTO>,
+    onClick: (SearchUiData) -> Unit,
+    searchUiState: SearchUiState,
     modifier: Modifier = Modifier,
 ) {
     Surface(color = Color.Black) {
@@ -86,7 +81,7 @@ private fun SearchContent(
                 )
             }
             LazyColumn {
-                items(listSearchQueryDTO) {
+                items(searchUiState.listSearch) {
                     CustomCardSearch(searchQueryDto = it, onClick = onClick)
                 }
             }
