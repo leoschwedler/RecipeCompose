@@ -2,13 +2,13 @@ package com.example.recipecompose.di
 
 import android.util.Log
 import com.example.recipecompose.commom.util.Constants
-import com.example.recipecompose.search.data.api.SearchService
-import com.example.recipecompose.detail.data.api.DetailService
+import com.example.recipecompose.search.data.network.api.SearchService
+import com.example.recipecompose.detail.data.network.api.DetailService
 import com.example.recipecompose.detail.data.repository.DetailRepository
 import com.example.recipecompose.detail.data.repository.DetailRepositoryImpl
-import com.example.recipecompose.home.data.remote.api.HomeService
-import com.example.recipecompose.home.data.remote.repository.HomeRepository
-import com.example.recipecompose.home.data.remote.repository.HomeRepositoryImpl
+import com.example.recipecompose.home.data.remote.network.api.HomeService
+import com.example.recipecompose.home.data.repository.HomeRepository
+import com.example.recipecompose.home.data.repository.HomeRepositoryImpl
 import com.example.recipecompose.search.data.repository.SearchRepository
 import com.example.recipecompose.search.data.repository.SearchRepositoryImpl
 import dagger.Module
@@ -54,7 +54,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesRetrofi(httpClient: OkHttpClient): Retrofit {
+    fun providesRetrofit(httpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .client(httpClient)
@@ -62,39 +62,5 @@ object AppModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun provideServiceSearch(retrofit: Retrofit): SearchService {
-        return retrofit.create(SearchService::class.java)
-    }
 
-    @Provides
-    @Singleton
-    fun provideServiceHome(retrofit: Retrofit): HomeService {
-        return retrofit.create(HomeService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideServiceDetail(retrofit: Retrofit): DetailService {
-        return retrofit.create(DetailService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideHomeRepository(service: HomeService): HomeRepository{
-        return HomeRepositoryImpl(service)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSearchRepository(service: SearchService): SearchRepository{
-        return SearchRepositoryImpl(service)
-    }
-
-    @Provides
-    @Singleton
-    fun provideDetailRepository(service: DetailService): DetailRepository{
-        return DetailRepositoryImpl(service)
-    }
 }

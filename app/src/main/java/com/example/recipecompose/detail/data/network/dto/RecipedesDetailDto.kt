@@ -1,5 +1,6 @@
-package com.example.recipecompose.detail.data.dto
+package com.example.recipecompose.detail.data.network.dto
 
+import com.example.recipecompose.detail.data.model.DetailDataLayer
 import com.example.recipecompose.detail.presentation.model.DetailUiData
 
 data class RecipedesDetailDto(
@@ -8,8 +9,8 @@ data class RecipedesDetailDto(
     val summary: String
 )
 
-fun RecipedesDetailDto.toDetailUiData(): DetailUiData{
-    return  DetailUiData(
+fun RecipedesDetailDto.toDetaiDataLayer(): DetailDataLayer{
+    return  DetailDataLayer(
         image = image,
         title = title,
         summary = summary

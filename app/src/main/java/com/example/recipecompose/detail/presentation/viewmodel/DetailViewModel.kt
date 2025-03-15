@@ -2,8 +2,7 @@ package com.example.recipecompose.detail.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.recipecompose.commom.model.Result
-import com.example.recipecompose.detail.data.dto.toDetailUiData
+import com.example.recipecompose.detail.data.model.toDetailUiData
 import com.example.recipecompose.detail.data.repository.DetailRepository
 import com.example.recipecompose.detail.presentation.model.DetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,22 +22,15 @@ class DetailViewModel @Inject constructor(val repository: DetailRepository) : Vi
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             val result = repository.fetchRecipeDetail(id = id)
-            when (result) {
-                is Result.Error -> {
-                    _uiState.update {
-                        it.copy(
-                            isLoading = true,
-                            isError = true,
-                            errorMessage = result.errorMessage
-                        )
-                    }
+            result.fold(
+                onSuccess = {
+                    val detailUiData = it.toDetailUiData()
+                    _uiState.update { it.copy(detailDto = detailUiData, isLoading = false) }
+                },
+                onFailure = {
+                    _uiState.update { it.copy(isError = true, isLoading = false) }
                 }
-
-                is Result.Success -> {
-                    val detailUiData = result.data.toDetailUiData()
-                    _uiState.update { it.copy(isLoading = false, detailDto = detailUiData) }
-                }
-            }
+            )
         }
     }
 }

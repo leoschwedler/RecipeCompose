@@ -3,7 +3,7 @@ package com.example.recipecompose.home.presentation.model
 data class HomeUiState(
     val isLoading: Boolean = false,
     val isError: Boolean = false,
-    val errorMessage: String = "",
+    val errorMessage: String = "Something went wrong",
     val listRecipeRandom: List<HomeUiData> = emptyList(),
     var query: String = "",
 )

@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.recipecompose.commom.components.CustomCard
 import com.example.recipecompose.commom.components.CustomSearch
-import com.example.recipecompose.home.data.remote.dto.RecipesDTO
+import com.example.recipecompose.home.data.remote.network.dto.RecipesDTO
 import com.example.recipecompose.home.presentation.model.HomeUiData
 import com.example.recipecompose.home.presentation.model.HomeUiState
 import com.example.recipecompose.home.presentation.viewmodel.HomeViewmodel
@@ -84,9 +84,16 @@ private fun HomeContent(
                 modifier = Modifier.padding(vertical = 15.dp),
                 color = Color.White
             )
-            LazyColumn {
-                items(homeUiState.listRecipeRandom) {
-                    CustomCard(homeUiData = it, onClick = onClick)
+            when{
+                homeUiState.isError -> {
+                    Text(text = homeUiState.errorMessage, color = Color.Red)
+                }
+                else -> {
+                    LazyColumn {
+                        items(homeUiState.listRecipeRandom) {
+                            CustomCard(homeUiData = it, onClick = onClick)
+                        }
+                    }
                 }
             }
 

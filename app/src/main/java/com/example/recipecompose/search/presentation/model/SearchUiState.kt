@@ -1,6 +1,6 @@
 package com.example.recipecompose.search.presentation.model
 
-import com.example.recipecompose.search.data.dto.SearchQueryDTO
+import com.example.recipecompose.search.data.network.dto.SearchQueryDTO
 
 data class SearchUiState(
     val listSearch: List<SearchUiData> = emptyList(),

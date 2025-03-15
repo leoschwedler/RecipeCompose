@@ -1,6 +1,6 @@
-package com.example.recipecompose.home.data.remote.api
+package com.example.recipecompose.home.data.remote.network.api
 
-import com.example.recipecompose.home.data.remote.dto.RecipeRandomResponse
+import com.example.recipecompose.home.data.remote.network.dto.RecipeRandomResponse
 import retrofit2.Response
 import retrofit2.http.GET
 

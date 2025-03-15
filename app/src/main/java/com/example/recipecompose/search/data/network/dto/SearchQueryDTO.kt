@@ -1,5 +1,6 @@
-package com.example.recipecompose.search.data.dto
+package com.example.recipecompose.search.data.network.dto
 
+import com.example.recipecompose.search.data.model.SearchDataLayer
 import com.example.recipecompose.search.presentation.model.SearchUiData
 
 data class SearchQueryDTO(
@@ -8,8 +9,8 @@ data class SearchQueryDTO(
     val image: String,
 )
 
-fun SearchQueryDTO.toSearchUiData(): SearchUiData{
-   return SearchUiData(
+fun SearchQueryDTO.toSearchDataLayer(): SearchDataLayer {
+   return SearchDataLayer(
         id = id,
         title = title,
         image = image

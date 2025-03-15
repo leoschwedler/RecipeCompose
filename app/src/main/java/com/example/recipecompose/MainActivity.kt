@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.recipecompose.search.data.api.SearchService
+import com.example.recipecompose.search.data.network.api.SearchService
 import com.example.recipecompose.commom.theme.RecipeComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

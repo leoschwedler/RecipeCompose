@@ -1,5 +1,6 @@
-package com.example.recipecompose.home.data.remote.dto
+package com.example.recipecompose.home.data.remote.network.dto
 
+import com.example.recipecompose.home.data.model.HomeDataLayer
 import com.example.recipecompose.home.presentation.model.HomeUiData
 
 data class RecipesDTO(
@@ -8,8 +9,8 @@ data class RecipesDTO(
     val title: String,
 )
 
-fun RecipesDTO.toHomeUiData(): HomeUiData{
-    return HomeUiData(
+fun RecipesDTO.toHomeDataLayer(): HomeDataLayer {
+    return HomeDataLayer(
         id = id,
         image = image,
         title = title

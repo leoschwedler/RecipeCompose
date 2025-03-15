@@ -1,6 +1,6 @@
 package com.example.recipecompose.detail.presentation.model
 
-import com.example.recipecompose.detail.data.dto.RecipedesDetailDto
+import com.example.recipecompose.detail.data.network.dto.RecipedesDetailDto
 
 data class DetailUiState(
     val isLoading: Boolean = false,

@@ -1,21 +1,20 @@
 package com.example.recipecompose.detail.data.repository
 
-import com.example.recipecompose.commom.model.Result
-import com.example.recipecompose.detail.data.api.DetailService
-import com.example.recipecompose.detail.data.dto.RecipedesDetailDto
+
+import com.example.recipecompose.detail.data.datasource.DetailRemoteDataSource
+import com.example.recipecompose.detail.data.model.DetailDataLayer
+import com.example.recipecompose.detail.data.network.dto.toDetaiDataLayer
 import javax.inject.Inject
 
-class DetailRepositoryImpl @Inject constructor(val service: DetailService): DetailRepository {
-    override suspend fun fetchRecipeDetail(id: Int): Result<RecipedesDetailDto> {
+class DetailRepositoryImpl @Inject constructor(private val detailRemoteDataSource: DetailRemoteDataSource) :
+    DetailRepository {
+    override suspend fun fetchRecipeDetail(id: Int): Result<DetailDataLayer> {
         return try {
-            val response = service.getRecipeDetail(id = id)
-            if (response.isSuccessful){
-                response.body()?.let { Result.Success(it) } ?: Result.Error("Empty response from server")
-            }else{
-                Result.Error("Request failed Code: ${response.code()} - Error body: ${response.errorBody()}")
-            }
-        }catch (e: Exception){
-            Result.Error("Exception: $e")
+            val response = detailRemoteDataSource.fetchRecipeDetail(id = id)
+            val detailDataLayer = response.toDetaiDataLayer()
+            return Result.success(detailDataLayer)
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 }

@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.recipecompose.search.data.api.SearchService
+import com.example.recipecompose.search.data.network.api.SearchService
 import com.example.recipecompose.detail.presentation.ui.DetailScreen
 import com.example.recipecompose.home.presentation.ui.HomeScreen
 import com.example.recipecompose.search.presentation.ui.SearchScreen

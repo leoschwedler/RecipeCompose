@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.recipecompose.search.data.dto.SearchQueryDTO
+import com.example.recipecompose.search.data.network.dto.SearchQueryDTO
 import com.example.recipecompose.search.presentation.model.SearchUiData
 
 @Composable

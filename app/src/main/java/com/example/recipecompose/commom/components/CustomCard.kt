@@ -15,7 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.recipecompose.home.data.remote.dto.RecipesDTO
+import com.example.recipecompose.home.data.remote.network.dto.RecipesDTO
 import com.example.recipecompose.home.presentation.model.HomeUiData
 
 @Composable

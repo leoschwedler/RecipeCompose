@@ -1,11 +1,8 @@
 package com.example.recipecompose.search.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.recipecompose.commom.model.Result
-import com.example.recipecompose.search.data.api.SearchService
-import com.example.recipecompose.search.data.dto.toSearchUiData
+import com.example.recipecompose.search.data.model.toSearchUiData
 import com.example.recipecompose.search.data.repository.SearchRepository
 import com.example.recipecompose.search.presentation.model.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,19 +18,19 @@ class SearchViewModel @Inject constructor(val repository: SearchRepository) : Vi
     val _uiState = MutableStateFlow(SearchUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun loadSearch(query: String){
+    fun loadSearch(query: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            val result =  repository.fetchSearch(query)
-            when(result){
-                is Result.Error -> {
-                    _uiState.update { it.copy(isLoading = false, isError = true, errorMessage = result.errorMessage) }
-                }
-                is Result.Success -> {
-                    val searchUiData = result.data.map { it.toSearchUiData() }
+            val result = repository.fetchSearch(query)
+            result.fold(
+                onSuccess = {
+                    val searchUiData = it.map { it.toSearchUiData() }
                     _uiState.update { it.copy(listSearch = searchUiData, isLoading = false) }
+                },
+                onFailure = {
+                    _uiState.update { it.copy(isError = true, isLoading = false) }
                 }
-            }
+            )
         }
     }
 }

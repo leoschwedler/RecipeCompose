@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.example.recipecompose.detail.data.dto.RecipedesDetailDto
+import com.example.recipecompose.detail.data.network.dto.RecipedesDetailDto
 import com.example.recipecompose.detail.presentation.model.DetailUiData
 import com.example.recipecompose.detail.presentation.viewmodel.DetailViewModel
 
